@@ -1,6 +1,0 @@
-{
-    "require": {
-        "nesbot/carbon": "^3.14",
-        "mexitek/phpcolors": "^1.0"
-    }
-}
