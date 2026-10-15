@@ -35,7 +35,7 @@ We want the app to show different shades of the chosen colour, a lighter shade, 
 To get the different shades of the chosen colour we can use the [phpcolors library](https://packagist.org/packages/mexitek/phpcolors)
 
 
-To install the phpcolors library enter the following into the terminal:
+To install the phpcolors library enter the following into the terminal (you may need to stop the server first `Ctrl+c`):
 
 ```
 composer require mexitek/phpcolors
@@ -50,7 +50,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Mexitek\PHPColors\Color;
 
-// Default colour if none submitted
+// Reads the colour value from the submitted form
 $baseHex = $_POST['base'] ?? '#3498db';
 
 //This code uses the PHPColors library
@@ -65,6 +65,8 @@ After we have read the selected colour from the form, we can use the PHPColors l
 Save your changes and test the page. 
 
 The user should now see two swatches, their chosen colour and a lighter variant. 
+
+Have a good look in the PHP and HTML code to make sure you understand how this is working. 
 
 ## Test Your Understanding
 
