@@ -68,10 +68,72 @@ Have a good look in the PHP and HTML code to make sure you understand how this i
 
 - Add another swatch to the page to show a darker variant of the colour. 
 
-- Have a look at the [phpcolors library documentation](https://packagist.org/packages/mexitek/phpcolors) to find out how to darken a colour. 
+- Have a look at the [phpcolors library documentation](https://packagist.org/packages/mexitek/phpcolors) to find out how to darken a colour.
 
 - If you can get this to work, add a fourth swatch for a complementary colour. 
 
 - There is a second form control for selecting the amount to lighten/darken by. How can you read the value from this form control and use this when lightening/darkening a colour. 
 
-- Finally, once we have four different swatches, we have lots of duplicate HTML code. How can you use arrays to store the different colour variants and a loop in the HTML page to dynamically generate the swatches. 
+- Finally, once we have four different swatches, we have lots of duplicate HTML code. How can you use arrays to store the different colour variants and a loop in the HTML page to dynamically generate the swatches.
+
+## Using Composer in our MVC App
+
+- One simple change we could make in our MVC app is moving _configuration out of code_.
+- Currently we store configuration information in a PHP array:
+
+```php
+$config = [
+    'database'=>[
+        'host' => 'db',
+        'dbname' => 'webdev',
+        'username' => 'student',
+        'password' => 'secret',
+    ]
+];
+return $config;
+```
+
+- It would be nice if the configuration was in a plain text file (**.env** file is a convention) e.g.
+
+**.env**
+
+```
+DB_HOST=localhost
+DB_NAME=webdev
+DB_USER=student
+DB_PASS=secret
+```
+- Makes it easy to exclude from version control
+- Don't have to edit PHP code to switch to a different database
+
+- Have a go at using the `vlucas/phpdotenv` library. This library allows us to load and parse an _.env_ file easily.
+  
+```
+composer require vlucas/phpdotenv
+```
+
+To use the library, we might have some PHP code like the following:
+
+```php
+// Require the autoload file
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Use the Dotenv library to load the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
+$dotenv->load();
+
+
+use App\Models\FilmRepository;
+use App\Database;
+use App\Controllers\FilmController;
+
+// Use the .env file settings for the databse
+$database = new Database(
+    $_ENV['DB_HOST'],
+    $_ENV['DB_NAME'],
+    $_ENV['DB_USER'],
+    $_ENV['DB_PASS'],
+    );
+$conn = $database->getConnection();
+```
+
